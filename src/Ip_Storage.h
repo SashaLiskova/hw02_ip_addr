@@ -1,6 +1,5 @@
 #include <iostream>
 #include <algorithm>
-#include <vector>
 #include <type_traits>
 #include "Ip_Address.h"
 
@@ -10,10 +9,11 @@ class Ip_Storage{
     Ip_Storage() = default;
     Ip_Storage(std::vector<Ip_Address> ipPool);
 
+    bool operator==(const Ip_Storage& other) const;
+
     void print();
     void sort();
     int size();
-
 
     template <typename... Args>
     Ip_Storage filter(Args... args){
@@ -30,7 +30,6 @@ class Ip_Storage{
 
     Ip_Storage filter_any(const u_int8_t val);
 
-    static bool isIpStaticCastSafe(const int val);
 
     private:
     std::vector<Ip_Address> mIpPool;

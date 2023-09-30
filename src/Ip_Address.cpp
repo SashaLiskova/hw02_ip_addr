@@ -4,28 +4,38 @@
 
 Ip_Address::Ip_Address()
 {
-    mStringIp = FAULTY_IP;
+    isEmpty = true;
 }
 
-Ip_Address::Ip_Address(ipv4 ip, std::string stringIp):
+Ip_Address::Ip_Address(ipv4 ip):
     mIp(ip),
-    mStringIp(stringIp)
+    isEmpty(false)
 {}
 
 Ip_Address::Ip_Address( const Ip_Address& other)
 {  
-    mStringIp = other.mStringIp;
     mIp = other.mIp;
+    isEmpty = other.isEmpty;
 }
 
 std::string Ip_Address::getStringIp() const
 {
-    return mStringIp;
+    std::string ipString = "";
+    std::for_each(mIp.begin(),mIp.end()-1,[&ipString](const auto &num){
+        ipString +=std::to_string(num);
+        ipString+=".";
+    });
+
+    ipString +=std::to_string(mIp[3]);
+
+    return ipString;
+
+
 }
 
 bool Ip_Address::isIpValid()
 {
-    return mStringIp!=FAULTY_IP;
+    return !isEmpty;
 }
 
 ipv4 Ip_Address::getIpv4()

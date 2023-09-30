@@ -1,6 +1,7 @@
 #include <array>
 #include <iostream>
 #include <vector>
+
 #define FAULTY_IP "FAULTY_IP"
 
 using ipv4 =  std::array<uint8_t,4>;
@@ -9,7 +10,7 @@ class Ip_Address
 {
     public:
     Ip_Address();
-    Ip_Address(ipv4 ip, std::string stringIp);
+    Ip_Address(ipv4 ip);
     Ip_Address(const Ip_Address& other);
 
     bool isIpValid();
@@ -28,7 +29,7 @@ class Ip_Address
 
     private:
     ipv4 mIp;
-    std::string mStringIp; 
+    bool isEmpty; 
 
 
 

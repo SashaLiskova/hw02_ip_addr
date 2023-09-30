@@ -1,12 +1,15 @@
 #include "Ip_Storage.h"
-#include <iostream>
-#include <vector>
-#include <algorithm>
-#include <limits>
-
 
 Ip_Storage::Ip_Storage( std::vector<Ip_Address> ipPool):mIpPool(ipPool)
-{}
+{
+
+}
+
+bool Ip_Storage::operator==(const Ip_Storage& other) const
+{
+    return mIpPool == other.mIpPool;
+}
+
 
 void Ip_Storage::print()
 {
@@ -26,11 +29,6 @@ int Ip_Storage::size()
 {
     return mIpPool.size();
 
-}
-
-bool Ip_Storage::isIpStaticCastSafe(const int val)
-{
-    return val>=0 && val<=std::numeric_limits<unsigned char>::max();
 }
 
 Ip_Storage Ip_Storage::filter_any(const u_int8_t val)

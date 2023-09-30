@@ -1,8 +1,15 @@
 #include "Parser.h"
 #include <limits>
-#include <algorithm>
 
-Ip_Storage parseInput(std::istream & input)
+namespace
+{
+    bool isIpStaticCastSafe(const int val)
+    {
+        return val>=0 && val<=std::numeric_limits<unsigned char>::max();    
+    }
+}
+
+Ip_Storage Parser::parseInput(std::istream & input)
 {
     std::vector<Ip_Address> ipPool;
 
@@ -20,12 +27,10 @@ Ip_Storage parseInput(std::istream & input)
             std::cout<<"ERR: line \""<<line<<"\" doesn't have correct ipAdress, it was skiped"<<std::endl;
     }
 
-
-    return Ip_Storage(ipPool);
-
+   return Ip_Storage(ipPool);
 }
 
-std::vector<std::string> split(const std::string &str, char d)
+std::vector<std::string> Parser::split(const std::string &str, char d)
 {
     std::vector<std::string> r;
 
@@ -46,7 +51,7 @@ std::vector<std::string> split(const std::string &str, char d)
     return r;
 }
 
-Ip_Address parseIpAddress(const std::string & line)
+Ip_Address Parser::parseIpAddress(const std::string & line)
 {
 
     auto splitedIpAdress = split(line,'.');
@@ -62,12 +67,12 @@ Ip_Address parseIpAddress(const std::string & line)
     {
         int val = stoi(splitedIpAdress[i]);
         
-        if(Ip_Storage::isIpStaticCastSafe(val))
+        if(isIpStaticCastSafe(val))
             ipv4[i]= static_cast<uint8_t>(val);
         else
             return Ip_Address();
     }
 
-    return Ip_Address(ipv4,line);
+    return Ip_Address(ipv4);
 }
 
